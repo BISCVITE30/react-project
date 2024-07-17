@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
-
 import './modal.scss';
 
 class Modal extends Component {
+  handleChange = (event) => {
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   render() {
     return (
       <div className="modal overlay">
         <div className="modal__content">
           <div className="create-event">
-            <button className="create-event__close-btn">+</button>
-            <form className="event-form">
+            <button
+              className="create-event__close-btn"
+              onClick={this.props.closeModal}
+            >
+              +
+            </button>
+            <form className="event-form" onSubmit={this.handleSubmit}>
               <input
                 type="text"
                 name="title"
