@@ -1,12 +1,38 @@
 import React, { Component } from 'react';
 import './modal.scss';
+import { createEvent } from '../../gateway/events';
 
 class Modal extends Component {
-  handleChange = (event) => {
-  };
+  handleChange = (event) => {};
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData(event.target);
+    const { date, startTime, endTime, title, description } = Object.fromEntries(
+      formData.entries()
+    );
+
+    const eventObject = {
+      id: Math.random(),
+      title,
+      description,
+      dateFrom: new Date(`${date}T${startTime}`),
+      dateTo: new Date(`${date}T${endTime}`),
+    };
+
+    if (!title || !description || !date || !startTime || !endTime) {
+      alert('Fill in the field');
+      return;
+    }
+
+    try {
+      createEvent(eventObject).then(() => {
+        this.props.addEvent(eventObject);
+        this.props.closeModal();
+      });
+    } catch (error) {
+      console.error('Error creating event:', error);
+    }
   };
 
   render() {

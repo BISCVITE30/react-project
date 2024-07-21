@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import Modal from '../modal/Modal.jsx';
 import './header.scss';
 
-const Header = ({ weekStartDate, onPreviousWeek, onNextWeek, onToday }) => {
+const Header = ({
+  weekStartDate,
+  onPreviousWeek,
+  onNextWeek,
+  onToday,
+  addEvent,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -12,17 +18,19 @@ const Header = ({ weekStartDate, onPreviousWeek, onNextWeek, onToday }) => {
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 6);
 
-    const startMonth = startDate.toLocaleDateString('en-US', { month: 'short' })
+    const startMonth = startDate.toLocaleDateString('en-US', {
+      month: 'short',
+    });
     const startYear = startDate.getFullYear();
-    const endMonth = endDate.toLocaleDateString('en-US', { month: 'short' })
+    const endMonth = endDate.toLocaleDateString('en-US', { month: 'short' });
     const endYear = endDate.getFullYear();
 
-    if(startMonth === endMonth && startYear === endYear){
-      return `${startMonth} ${startYear}`
-    } else if(startYear === endYear){
-      return `${startMonth} - ${endMonth} ${startYear}`
+    if (startMonth === endMonth && startYear === endYear) {
+      return `${startMonth} ${startYear}`;
+    } else if (startYear === endYear) {
+      return `${startMonth} - ${endMonth} ${startYear}`;
     } else {
-      return `${startMonth} - ${endMonth} ${startYear} - ${endYear}`
+      return `${startMonth} - ${endMonth} ${startYear} - ${endYear}`;
     }
   };
 
@@ -52,7 +60,7 @@ const Header = ({ weekStartDate, onPreviousWeek, onNextWeek, onToday }) => {
         </span>
       </div>
 
-      {isModalOpen && <Modal closeModal={closeModal} />}
+      {isModalOpen && <Modal closeModal={closeModal} addEvent={addEvent} />}
     </header>
   );
 };
